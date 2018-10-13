@@ -1,10 +1,10 @@
 #pragma once
 
+#include <Windows.h>
 #include <Xinput.h>
 #include <math.h>
-#include <Windows.h>
 
-#ifdef XINPUT_EXPORTS
+#ifdef XINPUTINTERFACE_EXPORTS
 #define XINPUT_EXPORTS __declspec(dllexport)
 #else
 #define XINPUT_EXPORTS __declspec(dllimport)
