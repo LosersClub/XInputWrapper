@@ -13,18 +13,45 @@ class Imports
   public static extern bool XInputControllerConnected(uint userIndex);
 }
 
+[StructLayout(LayoutKind.Sequential)]
 public struct Thumbstick {
   float x;
   float y;
+
+  public bool X {
+    get { return x; }
+  }
+
+  public bool Y {
+    get { return y; }
+  }
 }
 
+[StructLayout(LayoutKind.Sequential)]
 public struct DPad {
   bool up;
   bool right;
   bool down;
   bool left;
+
+  public bool Up {
+    get { return up; }
+  }
+
+  public bool Right {
+    get { return right; }
+  }
+
+  public bool Down {
+    get { return down; }
+  }
+
+  public bool Left {
+    get { return up; }
+  }
 }
 
+[StructLayout(LayoutKind.Sequential)]
 public struct ControllerState {
   bool isConnected;
   bool a;
@@ -42,6 +69,70 @@ public struct ControllerState {
   float leftTrigger;
   Thumbstick rightThumbstick;
   Thumbstick leftThumbstick;
+
+  public bool IsConnected {
+    get { return isConnected; }
+  }
+
+  public bool A {
+    get { return a; }
+  }
+
+  public bool B {
+    get { return b; }
+  }
+
+  public bool X {
+    get { return x; }
+  }
+
+  public bool Y {
+    get { return y; }
+  }
+
+  public bool Start {
+    get { return start; }
+  }
+
+  public bool Back {
+    get { return back; }
+  }
+
+  public bool RightBumper {
+    get { return rightBumper; }
+  }
+
+  public bool LeftBumper {
+    get { return leftBumper; }
+  }
+
+  public bool RightThumbstickButton {
+    get { return rightThumbstickButton; }
+  }
+
+  public bool LeftThumbstickButton {
+    get { return leftThumbstickButton; }
+  }
+
+  public DPad DPad {
+    get { return dPad; }
+  }
+
+  public float RightTrigger {
+    get { return rightTrigger; }
+  }
+
+  public float LeftTrigger {
+    get { return leftTrigger; }
+  }
+
+  public Thumbstick RightThumbstick {
+    get { return rightThumbstick; }
+  }
+
+  public Thumbstick LeftThumbstick {
+    get { return leftThumbstick; }
+  }
 }
 
 public class ControllerState {
