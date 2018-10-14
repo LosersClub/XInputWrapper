@@ -18,11 +18,11 @@ namespace XInputWrapper {
     float x;
     float y;
 
-    public bool X {
+    public float X {
       get { return x; }
     }
 
-    public bool Y {
+    public float Y {
       get { return y; }
     }
   }
@@ -155,10 +155,11 @@ namespace XInputWrapper {
     }
   }
 
-  public class ControllerState {
+  public class ControllerInput {
     public static ControllerState GetState(uint userIndex) {
       ControllerState state;
-      return Imports.XInputGetControllerState(userIndex, out state);
+      Imports.XInputGetControllerState(userIndex, out state);
+      return state;
     }
 
     public static void SetState(uint userIndex, float leftMotorVib, float rightMotorVib) {
