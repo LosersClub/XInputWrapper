@@ -74,6 +74,28 @@ namespace XInputWrapper {
     Thumbstick rightThumbstick;
     Thumbstick leftThumbstick;
 
+    internal ControllerState(bool isConnected, bool a, bool b, bool x, bool y,
+      bool start, bool back, bool rightBumper, bool leftBumper, bool rightThumbstickButton,
+      bool leftThumbstickButton, DPad dPad, float rightTrigger, float leftTrigger,
+      Thumbstick rightThumbstick, Thumbstick leftThumbstick) {
+      this.isConnected = isConnected;
+      this.a = a;
+      this.b = b;
+      this.x = x;
+      this.y = y;
+      this.start = start;
+      this.back = back;
+      this.rightBumper = rightBumper;
+      this.leftBumper = leftBumper;
+      this.rightThumbstickButton = rightThumbstickButton;
+      this.leftThumbstickButton = leftThumbstickButton;
+      this.dPad = dPad;
+      this.rightTrigger = rightTrigger;
+      this.leftTrigger = leftTrigger;
+      this.rightThumbstick = rightThumbstick;
+      this.leftThumbstick = leftThumbstick;
+    }
+
     public bool IsConnected
     {
       get { return isConnected; }
