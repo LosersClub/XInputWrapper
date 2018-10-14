@@ -88,43 +88,43 @@ void buildControllerState(XINPUT_STATE* xinputState, CONTROLLER_STATE* controlle
   // Connection status
   controllerState->IS_CONNECTED = errorCode != ERROR_DEVICE_NOT_CONNECTED;
   // Buttons
-  controllerState->A = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_A;
-  controllerState->B = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_B;
-  controllerState->X = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_X;
-  controllerState->Y = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-  controllerState->START = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_START;
-  controllerState->BACK = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_BACK;
-  controllerState->LEFT_BUMPER = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER;
-  controllerState->RIGHT_BUMPER = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER;
-  controllerState->LEFT_THUMBSTICK_BUTTON = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB;
-  controllerState->RIGHT_THUMBSTICK_BUTTON = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB;
-  DPAD dpad = {
-    xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP,
-    xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT,
-    xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN,
-    xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT
-  };
-  controllerState->DPAD = dpad;
-  float leftXCoord = (float)xinputState->Gamepad.sThumbLX;
-  float leftYCoord = (float)xinputState->Gamepad.sThumbLY;
-  applyThumbstickDeadZone(&leftXCoord, &leftYCoord, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-  // Thumbsticks
-  THUMBSTICK leftThumbstick = {
-    leftXCoord,
-    leftYCoord
-  };
-  controllerState->LEFT_THUMBSTICK = leftThumbstick;
-  float rightXCoord = (float)xinputState->Gamepad.sThumbRX;
-  float rightYCoord = (float)xinputState->Gamepad.sThumbRY;
-  applyThumbstickDeadZone(&rightXCoord, &rightYCoord, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-  THUMBSTICK rightThumbstick = {
-    rightXCoord,
-    rightYCoord
-  };
-  controllerState->RIGHT_THUMBSTICK = rightThumbstick;
-  // Triggers
-  controllerState->LEFT_TRIGGER = applyTriggerDeadZone(xinputState->Gamepad.bLeftTrigger);
-  controllerState->RIGHT_TRIGGER = applyTriggerDeadZone(xinputState->Gamepad.bRightTrigger);
+  controllerState->A = (xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0;
+  controllerState->B = (xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0;
+  controllerState->X = (xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_X) != 0;
+  controllerState->Y = (xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_Y) != 0;
+  //controllerState->START = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_START != 0;
+  //controllerState->BACK = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_BACK != 0;
+  //controllerState->LEFT_BUMPER = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER != 0;
+  //controllerState->RIGHT_BUMPER = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER != 0;
+  //controllerState->LEFT_THUMBSTICK_BUTTON = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB != 0;
+  //controllerState->RIGHT_THUMBSTICK_BUTTON = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB != 0;
+  //DPAD dpad = {
+  //  (xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) != 0,
+  //  xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT != 0,
+  //  xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN != 0,
+  //  xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT != 0
+  //};
+  //controllerState->DPAD = dpad;
+  //float leftXCoord = (float)xinputState->Gamepad.sThumbLX;
+  //float leftYCoord = (float)xinputState->Gamepad.sThumbLY;
+  //applyThumbstickDeadZone(&leftXCoord, &leftYCoord, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+  //// Thumbsticks
+  //THUMBSTICK leftThumbstick = {
+  //  leftXCoord,
+  //  leftYCoord
+  //};
+  //controllerState->LEFT_THUMBSTICK = leftThumbstick;
+  //float rightXCoord = (float)xinputState->Gamepad.sThumbRX;
+  //float rightYCoord = (float)xinputState->Gamepad.sThumbRY;
+  //applyThumbstickDeadZone(&rightXCoord, &rightYCoord, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+  //THUMBSTICK rightThumbstick = {
+  //  rightXCoord,
+  //  rightYCoord
+  //};
+  //controllerState->RIGHT_THUMBSTICK = rightThumbstick;
+  //// Triggers
+  //controllerState->LEFT_TRIGGER = applyTriggerDeadZone(xinputState->Gamepad.bLeftTrigger);
+  //controllerState->RIGHT_TRIGGER = applyTriggerDeadZone(xinputState->Gamepad.bRightTrigger);
 
 }
 
