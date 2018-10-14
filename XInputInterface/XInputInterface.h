@@ -27,6 +27,7 @@ typedef struct _DPAD {
 }DPAD;
 
 typedef struct _CONTROLLER_STATE {
+  bool IS_CONNECTED;
   bool A;
   bool B;
   bool X;
@@ -48,7 +49,7 @@ extern "C" {
   XINPUT_EXPORTS DWORD XInputGetControllerState(DWORD userIndex, CONTROLLER_STATE* controllerState);
   XINPUT_EXPORTS void XInputSetControllerState(DWORD userIndex, float leftMotorVib, float rightMotorVib);
   XINPUT_EXPORTS bool XInputControllerConnected(DWORD userIndex);
-  void buildControllerState(XINPUT_STATE* xinputState, CONTROLLER_STATE* controllerState);
+  void buildControllerState(XINPUT_STATE* xinputState, CONTROLLER_STATE* controllerState, DWORD errorCode);
   void applyThumbstickDeadZone(float* xCoord, float* yCoord, int deadZone);
   float applyTriggerDeadZone(byte trigger);
 }

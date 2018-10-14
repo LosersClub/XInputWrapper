@@ -50,7 +50,7 @@ DWORD XInputGetControllerState(DWORD userIndex, CONTROLLER_STATE* controllerStat
     DWORD errorCode = apiLoader.getStateInterface(userIndex, &xinputState);
     // The state changed
     if (previousPackets[userIndex] != xinputState.dwPacketNumber) {
-      buildControllerState(&xinputState, controllerState);
+      buildControllerState(&xinputState, controllerState, errorCode);
       previousPackets[userIndex] = xinputState.dwPacketNumber;
       previousControllerStates[userIndex] = *controllerState;
     }
@@ -84,7 +84,9 @@ bool XInputControllerConnected(DWORD userIndex) {
   return false;
 }
 
-void buildControllerState(XINPUT_STATE* xinputState, CONTROLLER_STATE* controllerState) {
+void buildControllerState(XINPUT_STATE* xinputState, CONTROLLER_STATE* controllerState, DWORD errorCode) {
+  // Connection status
+  controllerState->IS_CONNECTED = errorCode != ERROR_DEVICE_NOT_CONNECTED;
   // Buttons
   controllerState->A = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_A;
   controllerState->B = xinputState->Gamepad.wButtons & XINPUT_GAMEPAD_B;
