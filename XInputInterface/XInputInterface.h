@@ -19,26 +19,9 @@ typedef struct _THUMBSTICK {
   float Y;
 } THUMBSTICK;
 
-typedef struct _DPAD {
-  bool UP;
-  bool RIGHT;
-  bool DOWN;
-  bool LEFT;
-}DPAD;
-
 typedef struct _CONTROLLER_STATE {
   bool IS_CONNECTED;
-  bool A;
-  bool B;
-  bool X;
-  bool Y;
-  bool START;
-  bool BACK;
-  bool RIGHT_BUMPER;
-  bool LEFT_BUMPER;
-  bool RIGHT_THUMBSTICK_BUTTON;
-  bool LEFT_THUMBSTICK_BUTTON;
-  DPAD DPAD;
+  WORD BUTTONS;
   float RIGHT_TRIGGER;
   float LEFT_TRIGGER;
   THUMBSTICK RIGHT_THUMBSTICK;

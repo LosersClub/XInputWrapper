@@ -14,29 +14,23 @@ namespace XInputWrapper {
   }
 
   public enum Button {
-    A,
-    B,
-    X,
-    Y,
-    Dpad_Up,
-    Dpad_Right,
-    Dpad_Down,
-    Dpad_Left,
-    Start,
-    Back,
-    Right_Bumper,
-    Left_Bumper,
-    Right_Thumbstick_Button,
-    Left_Thumbstick_Button
+    A = 0x1000,
+    B = 0x2000,
+    X = 0x4000,
+    Y = 0x8000,
+    Dpad_Up = 0x0001,
+    Dpad_Right = 0x0008,
+    Dpad_Down = 0x0002,
+    Dpad_Left = 0x0004,
+    Start = 0x0010,
+    Back = 0x0020,
+    Right_Bumper = 0x0200,
+    Left_Bumper = 0x0100,
+    Right_Thumbstick_Button = 0x0080,
+    Left_Thumbstick_Button = 0x0040
   };
 
-  // Thumbsticks
-  public enum Analog {
-    Right,
-    Left
-  };
-
-  public enum Trigger {
+  public enum Side {
     Right,
     Left
   };
@@ -56,153 +50,59 @@ namespace XInputWrapper {
   }
 
   [StructLayout(LayoutKind.Sequential)]
-  public struct DPad {
-    bool up;
-    bool right;
-    bool down;
-    bool left;
-
-    public bool Up
-    {
-      get { return up; }
-    }
-
-    public bool Right
-    {
-      get { return right; }
-    }
-
-    public bool Down
-    {
-      get { return down; }
-    }
-
-    public bool Left
-    {
-      get { return up; }
-    }
-  }
-
-  [StructLayout(LayoutKind.Sequential)]
   public struct ControllerState {
+    [MarshalAs(UnmanagedType.I1)]
     bool isConnected;
-    bool a;
-    bool b;
-    bool x;
-    bool y;
-    bool start;
-    bool back;
-    bool rightBumper;
-    bool leftBumper;
-    bool rightThumbstickButton;
-    bool leftThumbstickButton;
-    DPad dPad;
+    ushort buttons;
     float rightTrigger;
     float leftTrigger;
     Thumbstick rightThumbstick;
     Thumbstick leftThumbstick;
 
-    internal ControllerState(bool isConnected, bool a, bool b, bool x, bool y,
-      bool start, bool back, bool rightBumper, bool leftBumper, bool rightThumbstickButton,
-      bool leftThumbstickButton, DPad dPad, float rightTrigger, float leftTrigger,
-      Thumbstick rightThumbstick, Thumbstick leftThumbstick)
-    {
+    internal ControllerState(bool isConnected, ushort buttons, float rightTrigger, float leftTrigger,
+      Thumbstick rightThumbstick, Thumbstick leftThumbstick) {
       this.isConnected = isConnected;
-      this.a = a;
-      this.b = b;
-      this.x = x;
-      this.y = y;
-      this.start = start;
-      this.back = back;
-      this.rightBumper = rightBumper;
-      this.leftBumper = leftBumper;
-      this.rightThumbstickButton = rightThumbstickButton;
-      this.leftThumbstickButton = leftThumbstickButton;
-      this.dPad = dPad;
+      this.buttons = buttons;
       this.rightTrigger = rightTrigger;
       this.leftTrigger = leftTrigger;
       this.rightThumbstick = rightThumbstick;
       this.leftThumbstick = leftThumbstick;
     }
 
-    public bool IsConnected
-    {
+    public bool IsConnected {
       get { return isConnected; }
     }
 
-    public bool A
-    {
-      get { return a; }
+    public ushort Buttons {
+      get { return buttons; }
     }
 
-    public bool B
-    {
-      get { return b; }
-    }
-
-    public bool X
-    {
-      get { return x; }
-    }
-
-    public bool Y
-    {
-      get { return y; }
-    }
-
-    public bool Start
-    {
-      get { return start; }
-    }
-
-    public bool Back
-    {
-      get { return back; }
-    }
-
-    public bool RightBumper
-    {
-      get { return rightBumper; }
-    }
-
-    public bool LeftBumper
-    {
-      get { return leftBumper; }
-    }
-
-    public bool RightThumbstickButton
-    {
-      get { return rightThumbstickButton; }
-    }
-
-    public bool LeftThumbstickButton
-    {
-      get { return leftThumbstickButton; }
-    }
-
-    public DPad DPad
-    {
-      get { return dPad; }
-    }
-
-    public float RightTrigger
-    {
+    public float RightTrigger {
       get { return rightTrigger; }
     }
 
-    public float LeftTrigger
-    {
+    public float LeftTrigger {
       get { return leftTrigger; }
     }
 
-    public Thumbstick RightThumbstick
-    {
+    public Thumbstick RightThumbstick {
       get { return rightThumbstick; }
     }
 
-    public Thumbstick LeftThumbstick
-    {
+    public Thumbstick LeftThumbstick {
       get { return leftThumbstick; }
+    }
+
+    public bool ButtonStatus(Button button) {
+      return (buttons & (ushort)button) != 0;
+    }
+
+    public float TriggerStatus(Side trigger) {
+      return trigger == Side.Left ? leftTrigger : rightTrigger;
+    }
+
+    public Thumbstick ThumbstickStatus(Side thumbstick) {
+      return thumbstick == Side.Left ? leftThumbstick : rightThumbstick;
     }
   }
 
@@ -219,48 +119,6 @@ namespace XInputWrapper {
 
     public static bool ControllerConnected(uint userIndex) {
       return Imports.XInputControllerConnected(userIndex);
-    }
-
-    public static bool ButtonStatus(ControllerState state, Button button) {
-      switch (button) {
-        case Button.A:
-          return state.A;
-        case Button.B:
-          return state.B;
-        case Button.X:
-          return state.X;
-        case Button.Y:
-          return state.Y;
-        case Button.Dpad_Up:
-          return state.DPad.Up;
-        case Button.Dpad_Right:
-          return state.DPad.Right;
-        case Button.Dpad_Down:
-          return state.DPad.Down;
-        case Button.Dpad_Left:
-          return state.DPad.Left;
-        case Button.Start:
-          return state.Start;
-        case Button.Back:
-          return state.Back;
-        case Button.Right_Bumper:
-          return state.RightBumper;
-        case Button.Left_Bumper:
-          return state.LeftBumper;
-        case Button.Right_Thumbstick_Button:
-          return state.RightThumbstickButton;
-        // Left_Thumbstick_Button; default required
-        default:
-          return state.LeftThumbstickButton;
-      }
-    }
-
-    public static float TriggerStatus(ControllerState state, Trigger trigger) {
-      return trigger == Trigger.Left ? state.LeftTrigger : state.RightTrigger;
-    }
-
-    public static Thumbstick ThumbstickStatus(ControllerState state, Analog thumbstick) {
-      return thumbstick == Analog.Left ? state.LeftThumbstick : state.RightThumbstick;
     }
   }
 }
